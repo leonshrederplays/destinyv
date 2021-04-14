@@ -1,5 +1,4 @@
 export const weaponModel = {
-    // noinspection JSUnusedGlobalSymbols
     combatpdw: 0x0A3D4D34,
     heavysnipermk2: 0x0A914799,
     heavysniper: 0x0C472FE2,

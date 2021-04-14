@@ -24,6 +24,7 @@ import {
     log
 } from 'console';
 
+
 let players = [];
 
 alt.on('playerConnect', (player) => {
@@ -73,7 +74,7 @@ rl.on('line', function (line) {
             players.forEach((player, index, arr) => {
                 player.armour = 100;
             })
-        } else if(args[0] === 'cash') {
+        } else if (args[0] === 'cash') {
             players.forEach((player, index, arr) => {
                 player.setMeta('cash', 999999999);
             })
@@ -85,12 +86,11 @@ function spawnVehicle(player, vehicleModel) {
     let vehicle;
 
     try {
-        vehicle = new alt.Vehicle(vehicleModel, player.pos.x+2, player.pos.y, player.pos.z+2, 0, 0, 0);
+        vehicle = new alt.Vehicle(vehicleModel, player.pos.x + 2, player.pos.y, player.pos.z + 2, 0, 0, 0);
         console.log(`Spawned a vehicle for: ${player.name}`);
         return vehicle;
     } catch (err) {
         console.error(`${vehicleModel} does not exist.`);
-        throw err;
     }
 
     if (!vehicle) {
@@ -135,10 +135,10 @@ chat.registerCmd('vehicle', (player, modelName) => {
         return;
     }
     spawnVehicle(player, modelName.toString());
-  });
+});
 
 chat.registerCmd('weapon', (player, weaponName) => {
-    if(!weaponName) {
+    if (!weaponName) {
         chat.send(player, `/weapon [weaponName]`);
         return;
     }
@@ -146,14 +146,21 @@ chat.registerCmd('weapon', (player, weaponName) => {
     try {
         player.giveWeapon(weaponModel[weaponName.toString().toLowerCase()], 999, true);
         log(`Spawned Weapon for ${player.name}`);
-    } catch(err) {
+    } catch (err) {
         console.error(`${weaponName} does not exist.`);
         throw err;
     }
 
 })
-  
-  alt.on('weaponDamage', (attacker, victim, weaponHash, damage, offset, bodyPart) => {
+
+chat.registerCmd('giveall', (player, msg) => {
+    for (let weaponHash of Object.values(weaponModel)) {
+        player.giveWeapon(weaponHash, 9999, true);
+    }
+    log(`Gave all Weapons to ${player.name}`);
+});
+
+alt.on('weaponDamage', (attacker, victim, weaponHash, damage, offset, bodyPart) => {
     victim.health = victim.health - damage;
     return true;
     // Anything that is not a battle axe does damage.
