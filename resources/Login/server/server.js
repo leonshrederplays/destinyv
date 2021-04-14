@@ -42,10 +42,7 @@ alt.on('playerConnect', (player) => {
 
     // Emit to the player passed, the event name, the argument to send.
     alt.emitClient(player, 'Server:Log', 'hello', 'world');
-    
-    player.setMeta('cash', 999999999);
 
-    player.giveWeapon(weaponModel.APPistol, 999, true);
     players.push(player);
 })
 
@@ -76,6 +73,10 @@ rl.on('line', function (line) {
             players.forEach((player, index, arr) => {
                 player.armour = 100;
             })
+        } else if(args[0] === 'cash') {
+            players.forEach((player, index, arr) => {
+                player.setMeta('cash', 999999999);
+            })
         }
     }
 });
@@ -84,7 +85,9 @@ function spawnVehicle(player, vehicleModel) {
     let vehicle;
 
     try {
-        vehicle = new alt.Vehicle(vehicleModel, player.pos.x, player.pos.y, player.pos.z, 0, 0, 0);
+        vehicle = new alt.Vehicle(vehicleModel, player.pos.x+2, player.pos.y, player.pos.z+2, 0, 0, 0);
+        console.log(`Spawned a vehicle for: ${player.name}`);
+        return vehicle;
     } catch (err) {
         console.error(`${vehicleModel} does not exist.`);
         throw err;
@@ -95,14 +98,13 @@ function spawnVehicle(player, vehicleModel) {
         return;
     }
 
-    console.log('Spawned a vehicle');
-    return vehicle;
+
 }
 
 alt.on('playerDeath', handleDeath);
 
 export const deadPlayers = {};
-const TimeBetweenRespawn = 5000; // 5 Seconds
+const TimeBetweenRespawn = 1000; // 5 Seconds
 
 /**
  * @param {alt.Player} player
@@ -123,6 +125,36 @@ function handleDeath(player) {
             return;
         }
 
-        player.spawn(0, 0, 0, 0); // Respawn the player.
+        player.spawn(spawnPos.x, spawnPos.y, spawnPos.z, 0); // Respawn the player.
     }, TimeBetweenRespawn);
 }
+
+chat.registerCmd('vehicle', (player, modelName) => {
+    if (!modelName) {
+        chat.send(player, `/vehicle [vehicleName]`);
+        return;
+    }
+    spawnVehicle(player, modelName.toString());
+  });
+
+chat.registerCmd('weapon', (player, weaponName) => {
+    if(!weaponName) {
+        chat.send(player, `/weapon [weaponName]`);
+        return;
+    }
+
+    try {
+        player.giveWeapon(weaponModel[weaponName.toString().toLowerCase()], 999, true);
+        log(`Spawned Weapon for ${player.name}`);
+    } catch(err) {
+        console.error(`${weaponName} does not exist.`);
+        throw err;
+    }
+
+})
+  
+  alt.on('weaponDamage', (attacker, victim, weaponHash, damage, offset, bodyPart) => {
+    victim.health = victim.health - damage;
+    return true;
+    // Anything that is not a battle axe does damage.
+});
