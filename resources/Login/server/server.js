@@ -1,6 +1,19 @@
 import * as alt from 'alt';
 import chat from 'chat';
+import {
+    log
+} from 'console';
+import dotenv from 'dotenv';
+import findconfig from 'find-config';
 import readline from 'readline';
+import {
+    weaponModel
+} from './weaponHashes.js';
+
+dotenv.config({
+    path: findconfig(".env")
+});
+pr
 var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -14,15 +27,6 @@ let spawnPos = {
     z: 37.873
 }
 
-import {
-    weaponModel
-} from './weaponHashes.js';
-import {
-    VehicleModel
-} from './vehicleHashes';
-import {
-    log
-} from 'console';
 
 
 let players = [];
