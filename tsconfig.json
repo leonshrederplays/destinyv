@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2015",
+        "lib": ["es2016"],
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noEmitOnError": true,
+        "newLine": "LF",
+        "forceConsistentCasingInFileNames": true,
+        "removeComments": true,
+        "declaration": false,
+        "sourceMap": false,
+        "outDir": "../build",
+        "types": [
+            "node"
+        ]
+    },
+    "files": [
+        "./resources/Login/server/weaponHashes.d.ts"
+    ]
+}
