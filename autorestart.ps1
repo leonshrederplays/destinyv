@@ -1,3 +1,9 @@
+# Installation:
+# Step 1: In Powershell type: notepad $PROFILE
+# Step 2: Type: $ALTV = "PATH_TO_ALTV_ROOT"
+# Step 3: Save Profile.
+# Step 4: Start Script.
+
 # make sure you adjust this to point to the folder you want to monitor
 $PathToMonitor = $ALTV
 
