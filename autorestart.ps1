@@ -3,6 +3,7 @@
 # Step 2: Type: $ALTV = "PATH_TO_ALTV_ROOT"
 # Step 3: Save Profile.
 # Step 4: Start Script.
+# Press Ctrl+C to exit script.
 
 # make sure you adjust this to point to the folder you want to monitor
 $PathToMonitor = $ALTV
