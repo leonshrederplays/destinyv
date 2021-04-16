@@ -1,171 +1,98 @@
-import * as alt from 'alt';
-import chat from 'chat';
-import {
-    log
-} from 'console';
 import dotenv from 'dotenv';
 import findconfig from 'find-config';
-import readline from 'readline';
-import {
-    weaponModel
-} from './weaponHashes.js';
-
 dotenv.config({
     path: findconfig(".env")
 });
-pr
-var rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    terminal: false
-});
+import * as alt from 'alt'
+import chat from 'chat';
+import SQL from '../../database/database.mjs';
+import { Account, Character } from './entities/entities.mjs';
 
-// Los Santos Customs
-let spawnPos = {
-    x: -365.425,
-    y: -131.809,
-    z: 37.873
-}
+// Each Database Schema you create will need to be added to the array after your connection string.
+// The database connection string goes as follows for postgres
+// postgresql://username:password@localhost:5423/databaseName
+const dbType = process.env.DBTYPE;
+const dbHost = process.env.DBHOST;
+const dbPort = process.env.DBPORT;
+const dbUsername = process.env.DBUSER;
+const dbPassword = process.env.DBPASS;
+const dbName = process.env.DB;
 
+// Must be in this specific order.
+// dbType, dbHost, dbPort, dbUsername, dbPassword, dbName, entityArray
+var database = new SQL(dbType, dbHost, dbPort, dbUsername, dbPassword, dbName, [
+    Account,
+    Character
+]);
 
+// This is an event called when the database is connected.
+// You don't need to use this; but it helps understand the current state of the db connection.
+alt.on('ConnectionComplete', () => {
+    var Account = {
+        username: 'stuyk',
+        password: '123'
+    };
 
-let players = [];
+    // Update or Insert a new document.
+    database.upsertData(Account, 'Account', result => {
+        // Fetch data by field name, field value, and repo name.
+        database.fetchData('username', 'stuyk', 'Account', res => {
+            if (res === undefined) {
+                console.log('This user was not found.');
+                return;
+            }
 
-alt.on('playerConnect', (player) => {
+            console.log(res);
+        });
 
-    // Log to Console
-    alt.log(`==> ${player.name} has connected.`);
+        // Fetch a document by ID.
+        database.fetchByIds(1, 'Account', res => {
+            if (res === undefined) {
+                console.log('The document with the id was not found.');
+                return;
+            }
 
-    // Displays message to all players.
-    chat.broadcast(`==> ${player.name} has joined.`);
+            console.log('Fetched Document for ID: ' + res[0].id);
+            console.log(res[0]);
 
-    // Sets the player's model.
-    player.model = 'mp_m_freemode_01';
+            // The result is going to be an array if it finds the document.
+            // If you're expecting 1 result. Then use call [0] on res.
+            console.log('Attempting to Update Data...');
+            database.updatePartialData(
+                res[0].id,
+                { username: 'NewUsername' },
+                'Account',
+                res => {
+                    // Will return an object if successfull.
+                    if (typeof res !== 'object') {
+                        console.log('Failed to find and update document.');
+                        return;
+                    }
 
-    // Spawns the player at coordinates x, y, z, with a delay of 1000 Milliseconds.
-    player.spawn(spawnPos.x, spawnPos.y, spawnPos.z, 1000);
+                    console.log('Updated Successfully');
+                }
+            );
+        });
 
-    // Emit to the player passed, the event name, the argument to send.
-    alt.emitClient(player, 'Server:Log', 'hello', 'world');
+        // Returns an array of all documents with all data.
+        // If no documents exist; it'll be undefined.
+        database.fetchAllData('Account', res => {
+            console.log('Fetched all documents for table ACCOUNT');
+            console.log(res);
+        });
 
-    players.push(player);
-})
+        // Selects all data and returns just usernames.
+        database.selectData('Account', ['username'], res => {
+            console.log('Selected by USERNAME');
+            console.log(res);
+        });
 
-alt.on('playerDisconnect', handleDisconnect);
-
-function handleDisconnect(player, reason) {
-    if (!player || !player.valid) {
-        console.log(`Looks like this player is already invalid. Can't save anything.`);
-        return;
-    }
-
-    console.log(`${player.name} has disconnected.`);
-}
-
-rl.on('line', function (line) {
-    let args = line.trim().toLowerCase().split(" ");
-
-    if (args.length > 0) {
-        if (args[0] === 'close') {
-            console.log("Stopping Server...");
-            process.kill(process.pid);
-        } else if (args[0] === 'vehicle' && args.length > 1) {
-            log(players);
-            players.forEach((player, index, arr) => {
-                spawnVehicle(player, args[1]);
-            })
-        } else if (args[0] === 'armour' && args.length > 1) {
-            players.forEach((player, index, arr) => {
-                player.armour = 100;
-            })
-        } else if (args[0] === 'cash') {
-            players.forEach((player, index, arr) => {
-                player.setMeta('cash', 999999999);
-            })
-        }
-    }
-});
-
-function spawnVehicle(player, vehicleModel) {
-    let vehicle;
-
-    try {
-        vehicle = new alt.Vehicle(vehicleModel, player.pos.x + 2, player.pos.y, player.pos.z + 2, 0, 0, 0);
-        console.log(`Spawned a vehicle for: ${player.name}`);
-        return vehicle;
-    } catch (err) {
-        console.error(`${vehicleModel} does not exist.`);
-    }
-
-    if (!vehicle) {
-        console.error(`${vehicleModel} does not exist.`);
-        return;
-    }
-
-
-}
-
-alt.on('playerDeath', handleDeath);
-
-export const deadPlayers = {};
-const TimeBetweenRespawn = 1000; // 5 Seconds
-
-/**
- * @param {alt.Player} player
- */
-function handleDeath(player) {
-    if (deadPlayers[player.id]) {
-        return;
-    }
-
-    deadPlayers[player.id] = alt.setTimeout(() => {
-        // Check if the player still has an entry.
-        if (deadPlayers[player.id]) {
-            delete deadPlayers[player.id];
-        }
-
-        // Check if the player hasn't just left the server yet.
-        if (!player || !player.valid) {
-            return;
-        }
-
-        player.spawn(spawnPos.x, spawnPos.y, spawnPos.z, 0); // Respawn the player.
-    }, TimeBetweenRespawn);
-}
-
-chat.registerCmd('vehicle', (player, modelName) => {
-    if (!modelName) {
-        chat.send(player, `/vehicle [vehicleName]`);
-        return;
-    }
-    spawnVehicle(player, modelName.toString());
-});
-
-chat.registerCmd('weapon', (player, weaponName) => {
-    if (!weaponName) {
-        chat.send(player, `/weapon [weaponName]`);
-        return;
-    }
-
-    try {
-        player.giveWeapon(weaponModel[weaponName.toString().toLowerCase()], 999, true);
-        log(`Spawned Weapon for ${player.name}`);
-    } catch (err) {
-        console.error(`${weaponName} does not exist.`);
-        throw err;
-    }
-
-})
-
-chat.registerCmd('giveall', (player, msg) => {
-    for (let weaponHash of Object.values(weaponModel)) {
-        player.giveWeapon(weaponHash, 9999, true);
-    }
-    log(`Gave all Weapons to ${player.name}`);
-});
-
-alt.on('weaponDamage', (attacker, victim, weaponHash, damage, offset, bodyPart) => {
-    victim.health = victim.health - damage;
-    return true;
-    // Anything that is not a battle axe does damage.
+        // Delete by ID
+        setTimeout(() => {
+            database.deleteByIds(1, 'Account', res => {
+                console.log('Deleted ID 1');
+                console.log(res);
+            });
+        }, 5000);
+    });
 });
