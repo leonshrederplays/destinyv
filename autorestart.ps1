@@ -1,8 +1,10 @@
 # Installation:
-# Step 1: In Powershell type: notepad $PROFILE
-# Step 2: Type: $ALTV = "PATH_TO_ALTV_ROOT"
-# Step 3: Save Profile.
-# Step 4: Start Script.
+# Step 1: Start a Powershell in Administrator Mode.
+# Step 2: Type: "Set-ExecutionPolicy Unrestricted -Force"
+# Step 3: In Powershell type: notepad $PROFILE
+# Step 4: Type: $ALTV = "PATH_TO_ALTV_ROOT"
+# Step 5: Save Profile.
+# Step 6: Start Script.
 # Press Ctrl+C to exit script.
 
 # make sure you adjust this to point to the folder you want to monitor
