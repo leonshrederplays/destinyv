@@ -27,6 +27,10 @@ var database = new SQL(dbType, dbHost, dbPort, dbUsername, dbPassword, dbName, [
 
 let webview;
 
+alt.onClient('SendRegisterCredentials:ToServer', (player, credentials) => {
+  alt.log(credentials);
+});
+
 alt.on("playerConnect", (player) => {
 
      //Spawning the Player at the Weed Farm

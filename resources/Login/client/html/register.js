@@ -1,19 +1,10 @@
-$(document).ready(function(){
-    $("#submit").click(function(){
-        var username = $("#username").val();
+$(function() {
+    $("#submit").on('click', (event) => {
+        event.preventDefault();
+        var credentials = [$("#username").val(), $("#email").val(), $("#password").val()];
         if('alt' in window){
-            alt.emit('UsernameRegister:ToClient', username);
-            }
-        var email = $("#email").val();
-        if('alt' in window){
-            alt.emit('emailRegister:ToClient', email);
-            }
-        var password = $("#password").val();
-        if('alt' in window){
-            alt.emit('passwordRegister:ToClient', password);
-            }
+            alt.emit('SendRegisterCredentials:ToClient', credentials);
+            console.log("Submited Credentials to Client");
+        }
     });
 });
-
-
-
