@@ -6,6 +6,9 @@ import chalk from 'chalk';
 // Connect to database
 import './database/connection/connect';
 
+// Load Client Emits
+import './clientEmits/SendCredentialsToServer';
+
 // alt:V Files to Load
 // Commands
 import './commands/respawn';
