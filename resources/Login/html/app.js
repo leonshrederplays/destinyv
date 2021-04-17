@@ -1,16 +1,13 @@
-$(document).ready(function(){
-    $("#submit").click(function(){
-        
-        var username = $("#username").val();
+window.addEventListener('keydown', key => {
+    if(key == 'e'){
         if('alt' in window){
-        alt.emit('StuffLogin:ToClient', username);
+            alt.emit('close:Webview');
         }
-        var password = $("#password").val();
-        if('alt' in window){
-            alt.emit('StuffLogin:ToClient', password);
-            }
-    });
-});
+    }
+})
+
+
+
 
 
 

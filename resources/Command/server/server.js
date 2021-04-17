@@ -1,33 +1,40 @@
 import * as alt from 'alt';
 import chat from 'chat';
 
-alt.on('playerDeath', handleDeath);
-
 export const deadPlayers = {};
-const TimeBetweenRespawn = 5000; // 5 Seconds
 
-/**
- * @param {alt.Player} player
- */
-function handleDeath(player) {
-    if (deadPlayers[player.id]) {
-        return;
-    }
+    const TimeBetweenRespawn = 5000; // 5 Seconds
+    alt.on('playerDeath', handleDeath);
 
-    deadPlayers[player.id] = alt.setTimeout(() => {
-        // Check if the player still has an entry.
-        if (deadPlayers[player.id]) {
-            delete deadPlayers[player.id];
+    /**
+     * @param {alt.Player} player
+     */
+    function handleDeath(player) {
+        //Spawning the Player at the Weed Farm
+        let spawnPos = {
+            x: 2208.777,
+            y: 5578.235,
+            z: 53.735
         }
 
-        // Check if the player hasn't just left the server yet.
-        if (!player || !player.valid) {
+        if (deadPlayers[player.id]) {
             return;
         }
+    
+        deadPlayers[player.id] = alt.setTimeout(() => {
+            // Check if the player still has an entry.
+            if (deadPlayers[player.id]) {
+                delete deadPlayers[player.id];
+            }
+    
+            // Check if the player hasn't just left the server yet.
+            if (!player || !player.valid) {
+                return;
+            }
 
-        player.spawn(0, 0, 0, 0); // Respawn the player.
-    }, TimeBetweenRespawn);
-}
+            player.spawn(spawnPos.x, spawnPos.y, spawnPos.z, 1000); // Respawn the player.
+        }, TimeBetweenRespawn);
+    }
 
 chat.registerCmd('sethp', (player, arg) => {
     if (!arg || arg.length <= 0){
@@ -58,8 +65,10 @@ chat.registerCmd('veh', (player, arg) => {
 });
 
 
+
 chat.registerCmd('setmodel', (player, arg) => {
     
+
     if (!arg || arg.length <= 0){
         chat.send(player, '/setmodel (playermodel)');
         return;

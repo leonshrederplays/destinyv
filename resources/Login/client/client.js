@@ -5,31 +5,33 @@ import { everyTick } from "alt-client";
 import * as native from "natives";
 import * as chat from 'chat';
 
-alt.on('UsernameRegister:ToClient', username);
 
-alt.on('emailRegister:ToClient', email);
-
-alt.on('passwordRegister:ToClient', password);
+alt.onServer('Start:Login', startLogin);
 
 
-function username(username) {
+function startLogin(){
+    let webview;
 
-    alt.emitServer('UsernameRegister:ToServer', username);
-
-};
-
-
-function email(email){
-
-    alt.emitServer('emailRegister:ToServer', email);
-};
+    if (!webview){
+        webview = new alt.WebView('../html/index.html');
+        webview.on('close:WebView', closeWebview);
+      }
+    
+      webview.focus();
+      alt.showCursor(true);}
 
 
-function password(password){
 
-    alt.emitServer('passwordRegister:ToServer', password);
+      function closeWebview(){
+        alt.showCursor(true);
+        webview.destroy();
+        webview = undefined;
+      }
 
-};
+
+
+
+
 
 // This event fires when the chat is opened.
 alt.on('chatOpened', () => {
