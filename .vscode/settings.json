@@ -1,0 +1,16 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "node_modules": true,
+        ".env": true,
+        "altv-server.zip": true,
+        "package-lock.json": true,
+        "modules": true,
+        "data": true,
+        "crashdumps": true,
+    }
+}
