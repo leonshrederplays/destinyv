@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# AltV Cache
+cache/*
+
+# nodejs Packag-lock
+package-lock.json
