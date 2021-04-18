@@ -13,23 +13,23 @@
     display: flex;
     align-items: center; 
     justify-content: center; 
-    background: url(bg-back2.jpg) no-repeat; 
+    background: url('../img/bg-back2.jpg') no-repeat; 
     background-size: cover; 
     background-position: center;
-    perspective: 1000px; 
+    perspective: 62.5rem; 
  
 } 
 .form-container form{ 
-    height:450px; 
-    width:350px; 
+    height: 34rem; 
+    width: 21.875rem; 
     background: rgba(255,255,255,.1); 
     text-align: center;
     align-items: center;
-    border-radius: 5px;
-    box-shadow: 0 5px 15px rgba(0,0,0,.3);
+    border-radius: .3125rem;
+    box-shadow: 0 .3125rem .9375rem rgba(0,0,0,.3);
     border-top: 1px solid rgba(255,255,255,.3);
     border-left: 1px solid rgba(255,255,255,.3);    
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(.625rem);
     transform-style: preserve-3d; 
 }
 /*heading*/
@@ -67,7 +67,7 @@
     width:90%; 
     cursor: pointer; 
     background:linear-gradient(90deg, deeppink, blueviolet); 
-    margin-top: 30px; 
+    /* margin-top: 30px;  */
     border-radius: 50px; 
 } 
 .form-container form input[type="submit"]:hover 
@@ -79,4 +79,13 @@
 }
 .icon{
     margin-right: 8px;
+}
+
+#destinyv {
+    margin-top: 2rem;
+    border-radius: 1rem;
+}
+
+a {
+    text-decoration: none;
 }
