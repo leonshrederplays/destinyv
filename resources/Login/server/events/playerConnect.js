@@ -27,5 +27,5 @@ function playerConnect(player) {
     player.send(`{9000FF}Welcome to Destiny V!`);
 
     // LINK ../../client/panels/login.js:10
-    alt.emitClient(player, 'Start:Login');
+    //alt.emitClient(player, 'Start:Login');
 }
