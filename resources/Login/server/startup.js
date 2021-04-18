@@ -54,5 +54,16 @@
   import './utility/array';
   import './utility/vector';
 
+
   // !SECTION
+  // NOTE Add Help-Command after all Server-Side is loaded.
+  import { registerCmd, commands } from './systems/chat';
+  registerCmd('help', '/help | Show all commands', handleHelp);
+  function handleHelp(player) {
+    for (const [key, value] of Object.entries(commands)) {
+      player.send(`${value.description}`);
+    }
+  }
   // !SECTION
+
+

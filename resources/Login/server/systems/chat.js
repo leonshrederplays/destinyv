@@ -1,6 +1,6 @@
 import alt from 'alt-server';
 
-let commands = {};
+export let commands = {};
 
 alt.onClient('chat:Send', chatSend);
 
