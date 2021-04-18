@@ -1,12 +1,18 @@
 import alt from 'alt-client';
 import { SendCredentialsToServer } from '../clientEmits/SendCredentialsToServer';
+import { validateEmail } from '../utility/validateEmail';
 alt.log(`Loaded: panels/login`);
 
 let loaded = false;
 let opened = false;
 let view;
 
+// SECTION Login
+
+// NOTE Listen to login Event.
 alt.onServer('Start:Login', initializeLogin);
+
+// NOTE Start Webview.
 function initializeLogin() {
     if (!view) {
         view = new alt.WebView('http://resource/client/html/login/register.html');
@@ -17,9 +23,12 @@ function initializeLogin() {
     }
 }
 
+// NOTE Close Webview.
 function closeWebview() {
     view.unfocus();
     alt.showCursor(true);
     view.destroy();
     view = undefined;
 }
+
+// !SECTION

@@ -2,12 +2,15 @@
 import alt from 'alt-client';
 import * as native from 'natives';
 
-// Load Events
+// SECTION Load Events
 
+// !SECTION
 
+// SECTION Panels
 // Load Panels
 import '/client/panels/login';
 import '/client/panels/chat';
 
+// !SECTION
 // You won't see this unless you're in-game.
-alt.log('The resource has now started client-sided. Poggers');
+alt.log('The Client-Sided Scripts are now fully loaded');

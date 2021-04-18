@@ -12,27 +12,42 @@
 </head>
 
 <body>
-    <div class="container">
-
-        <div class="main">
-
-            <h2>DestinyV Registrierung</h2>
-
-            <form id="target" method="post" name="myform">
-
-                <input type="text" name="username" placeholder="Username" id="username" />
-
-                <input type="text" name="email" placeholder="E-Mail" id="email" />
-
-                <input type="password" name="password" placeholder="Passwort" id="password" />
-
-                <input type="button" value="Registrieren" id="submit" />
-
-                <!-- <p>Du hast einen Account? Dann klicke <a href="index.html"> hier</a>!</p> -->
-            </form>
-
+    <div class="form-container">
+        <form  action="" id="form" >
+        <h3>Register</h3>
+        <class class="container">
+        <span class="icon"><i class="fas fa-user"></i></span>
+        <input type="text" placeholder="Username"/>
+        <div class="container">
+        <span class="icon"><i class="fas fa-at"></i></span>
+        <input type="email" placeholder="E-Mail"/>
         </div>
-    </div>
+        <div class="container">
+        <span class="icon"><i class="fas fa-lock"></i></span>
+        <input type="password" placeholder="Password"/>
+        </div>
+        <input type="submit" value="Register">
+        <p>Du hast einen Account? Dann klicke <a href="index.html"> hier</a>!</p>
+        </form>
+
+        <script> 
+
+            var form = document.getElementById('form'); 
+            form.addEventListener('mousemove', (e) =>{ 
+            
+            var x = (window.innerWidth / 2 - e.pageX) / 12;  ; 
+            var y = (window.innerHeight / 2 - e.pageY) / 12;
+            form.style.transform = 'rotateX(' + x + 'deg) rotateY(' + y + 'deg)';
+            
+            }); 
+            
+            form.addEventListener('mouseleave', function(){
+            form.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            
+            });
+            
+            </script> 
+            
 </body>
 
 </html>

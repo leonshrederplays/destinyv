@@ -1,38 +1,58 @@
-  
-/// <reference types="@altv/types-server" />
-import alt from 'alt-server';
-import chalk from 'chalk';
+  /// <reference types="@altv/types-server" />
+  import alt from 'alt-server';
+  import chalk from 'chalk';
 
-// Connect to database
-import './database/connection/connect';
+  // SECTION Load Database Stuff
+  import './database/connection/connect';
 
-// Load Client Emits
-import './clientEmits/SendCredentialsToServer';
+  // !SECTION
 
-// alt:V Files to Load
-// Commands
-import './commands/respawn';
-import './commands/sethp';
-import './commands/utility';
-import './commands/vehicle';
-import './commands/weapon';
-import './commands/setmodel';
-// Configuration Files
-import './configuration/config';
+  // SECTION Load Client emits.
+  import './clientEmits/SendCredentialsToServer';
 
-// Events
-import './events/playerConnect';
-import './events/playerDeath';
-import './events/playerDisconnect';
+  // !SECTION
 
-// Prototypes
-import './prototypes/player';
+  // SECTION Load Alt:V Files
 
-// Systems
-import './systems/chat';
+  // SECTION Commands
+  // Commands
+  import './commands/respawn';
+  import './commands/sethp';
+  import './commands/utility';
+  import './commands/vehicle';
+  import './commands/weapon';
+  import './commands/setmodel';
 
-// Utility
-import './utility/array';
-import './utility/vector';
+  // !SECTION
 
-alt.log(chalk.cyanBright('The resource has now started! PogChamp'));
+
+  // SECTION Configuration Files
+  import './configuration/config';
+
+  // !SECTION
+
+
+  // SECTION Events
+  import './events/playerConnect';
+  import './events/playerDeath';
+  import './events/playerDisconnect';
+
+  // !SECTION
+
+
+  // SECTION Prototypes
+  import './prototypes/player';
+
+  // !SECTION
+
+  // SECTION Systems
+  import './systems/chat';
+
+  // !SECTION
+
+  // SECTION Utility
+  import './utility/array';
+  import './utility/vector';
+
+  // !SECTION
+  // !SECTION

@@ -5,10 +5,10 @@ dotenv.config({
 });
 import alt from 'alt-server';
 import chalk from 'chalk';
-import SQL from "../../../../database/database.mjs";
+import SQL from "../../../../database-util/database.mjs";
 import { Account, Character } from "../schema/schemas.mjs";
 
-alt.log(chalk.greenBright('Loaded: database/connection/connect'));
+alt.log(chalk.greenBright('Loaded: database-util/connection/connect'));
 
 // Each Database Schema you create will need to be added to the array after your connection string.
 // The database connection string goes as follows for postgres
