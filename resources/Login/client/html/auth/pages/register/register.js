@@ -9,7 +9,6 @@ $(function() {
             console.log(`${username} | ${email} | ${password} is valid`);
         } else {
             console.log(`${username} | ${email} | ${password} is invalid`);
-            
         }
         var credentials = [];
 
