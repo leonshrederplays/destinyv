@@ -15,7 +15,7 @@ alt.onServer('Start:Login', initializeLogin);
 function initializeLogin() {
     if (!view) {
         //view = new alt.WebView('http://resource/client/html/auth/pages/register/register.html');
-        view = new alt.WebView('http://resource/client/html/auth/pages/test/app.html');
+        view = new alt.WebView('http://resource/client/html/auth/pages/login/login.html');
         view.on('close:WebView', closeWebview);
         view.on('SendCredentials:ToClient', SendCredentialsToServer);
         view.focus();
